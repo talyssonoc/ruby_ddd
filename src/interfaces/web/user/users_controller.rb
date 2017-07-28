@@ -11,45 +11,43 @@ module Interfaces
           'app.user.create_user'
         ]
 
-        namespace '/users' do
-          get do
-            get_all_users.call do |result|
-              result.success do |users|
-                body json(users.map(&:to_h))
-              end
+        get '/' do
+          get_all_users.call do |result|
+            result.success do |users|
+              body json(users.map(&:to_h))
+            end
 
-              result.error do |error|
-                status 400
-                body json(error)
-              end
+            result.error do |error|
+              status 400
+              body json(error)
+            end
+          end
+        end
+
+        get '/:id' do
+          get_user.call(user_id: params[:id]) do |result|
+            result.success do |user|
+              body json(user.to_h)
+            end
+
+            result.error do |error|
+              status 400
+              body json(error)
             end
           end
 
-          get '/:id' do
-            get_user.call(user_id: params[:id]) do |result|
-              result.success do |user|
-                body json(user.to_h)
-              end
+        end
 
-              result.error do |error|
-                status 400
-                body json(error)
-              end
+        post '/' do
+          create_user.call(params) do |result|
+            result.success do |user|
+              status 201
+              body json(user.to_h)
             end
 
-          end
-
-          post do
-            create_user.call(params) do |result|
-              result.success do |user|
-                status 201
-                body json(user.to_h)
-              end
-
-              result.error do |error|
-                status 400
-                body json(error)
-              end
+            result.error do |error|
+              status 400
+              body json(error)
             end
           end
         end

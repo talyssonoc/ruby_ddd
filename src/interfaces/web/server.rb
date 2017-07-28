@@ -1,10 +1,10 @@
-require_relative 'base/controller'
+require_relative 'base/server'
 require_relative 'user/users_controller'
 
 module Interfaces
   module Web
-    class Server < Base::Controller
-      use User::UsersController
+    Server = Base::Server.new do
+      controller '/users', User::UsersController
     end
   end
 end
