@@ -1,4 +1,3 @@
-require 'rom'
 require 'import'
 
 module Infra
@@ -9,12 +8,16 @@ module Infra
         'infra.rom.rom'
       ]
 
+      UserNotFound = Class.new(::StandardError)
+
       def get_all
         rom.relations.users.map(&method(:build_entity))
       end
 
       def get_by_id(id)
         build_entity(rom.relations.users.fetch(id))
+      rescue ::ROM::TupleCountMismatchError
+        raise UserNotFound, id
       end
 
       def create(attributes)

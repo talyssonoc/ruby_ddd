@@ -1,7 +1,12 @@
+require 'dotenv'
+require 'pry'
+
+Dotenv.load('.env', ".env.#{ENV['RACK_ENV']}")
+
 require_relative 'container'
 
-Container.finalize! do |container|  
-  LAYERS = %w[app domain infra interfaces]
+Container.finalize! do |container|
+  LAYERS = %w[app domain infra]
 
   LAYERS.each do |layer|
     Dir["#{File.dirname(__FILE__)}/#{layer}/**/*.rb"].each { |file| require file }
@@ -28,12 +33,6 @@ Container.finalize! do |container|
 
     namespace('user') do
       register('user_repository') { Infra::User::ROMUserRepository.new }
-    end
-  end
-
-  container.namespace('interfaces') do
-    namespace('web') do
-      register('server', Interfaces::Web::Server)
     end
   end
 end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
+gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-contrib'
 gem 'dry-system'
 gem 'virtus'
@@ -13,4 +13,11 @@ group :test, :development do
   gem 'shotgun'
   gem 'pry'
   gem 'dotenv'
+end
+
+group :test do
+  gem 'rspec'
+  gem 'rack-test'
+  gem 'rom-factory'
+  gem 'database_cleaner'
 end

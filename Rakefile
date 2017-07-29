@@ -1,9 +1,12 @@
+require 'rubygems'
 require 'bundler/setup'
-require 'rom/sql/rake_task'
+
+ENV['RACK_ENV'] ||= 'development'
+
 require_relative 'src/boot'
+require 'rom/sql/rake_task'
 
 namespace :db do
   task :setup do
-    Container.resolve('persistence.rom_container')
   end
 end

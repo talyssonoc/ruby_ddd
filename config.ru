@@ -1,11 +1,9 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'dotenv/load'
 
-Bundler.require(:default, ENV['RACK_ENV'])
+ENV['RACK_ENV'] ||= 'development'
 
 require_relative 'src/boot'
+require 'interfaces/web/server'
 
-server = Container['interfaces.web.server']
-
-run server
+run Interfaces::Web::Server

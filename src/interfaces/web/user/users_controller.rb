@@ -30,9 +30,9 @@ module Interfaces
               body json(user.to_h)
             end
 
-            result.error do |error|
-              status 400
-              body json(error)
+            result.not_found do |error|
+              status 404
+              body json(error: "User with id #{params[:id]} not found")
             end
           end
 
