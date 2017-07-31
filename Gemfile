@@ -20,4 +20,5 @@ group :test do
   gem 'rack-test'
   gem 'rom-factory'
   gem 'database_cleaner'
+  gem 'simplecov', require: false
 end

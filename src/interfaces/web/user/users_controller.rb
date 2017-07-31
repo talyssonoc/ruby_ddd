@@ -25,7 +25,7 @@ module Interfaces
         end
 
         get '/:id' do
-          get_user.call(user_id: params[:id]) do |result|
+          get_user.call(user_id: params.fetch(:id).to_i) do |result|
             result.success do |user|
               body json(user.to_h)
             end

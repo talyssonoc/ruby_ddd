@@ -3,12 +3,14 @@ require 'bundler/setup'
 
 ENV['RACK_ENV'] ||= 'test'
 
+require 'simplecov'
+SimpleCov.start
+
 require File.expand_path('../../src/boot', __FILE__)
 
 require 'rack/test'
 require 'database_cleaner'
 require 'factory'
-
 
 Dir["#{File.dirname(__FILE__)}/factories/*.rb"].each { |file| require file }
 
@@ -16,12 +18,12 @@ Dir["#{File.dirname(__FILE__)}/factories/*.rb"].each { |file| require file }
 module ControllerTest
   include Rack::Test::Methods
 
-  def app
-    described_class
+  def json
+    @json ||= JSON.parse(response.body)
   end
 
-  def json
-    @json ||= JSON.parse(last_response.body)
+  def response
+    last_response
   end
 end
 
