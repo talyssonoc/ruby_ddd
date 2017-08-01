@@ -21,4 +21,5 @@ group :test do
   gem 'rom-factory'
   gem 'database_cleaner'
   gem 'simplecov', require: false
+  gem 'coveralls', require: false
 end
