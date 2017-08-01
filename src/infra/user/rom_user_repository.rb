@@ -24,6 +24,10 @@ module Infra
         get_by_id(rom.relations.users.insert(attributes))
       end
 
+      def count
+        rom.relations.users.count
+      end
+
       private
 
       def build_entity(user_rom)

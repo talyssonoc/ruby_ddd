@@ -8,6 +8,8 @@ module App
 
       outputs :success, :error
 
+      private
+
       def perform
         users = user_repository.get_all
 

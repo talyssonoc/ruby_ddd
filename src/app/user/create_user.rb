@@ -8,6 +8,8 @@ module App
 
       outputs :success, :error
 
+      private
+
       def perform(user_params)
         output :success, user_repository.create(user_params)
       end

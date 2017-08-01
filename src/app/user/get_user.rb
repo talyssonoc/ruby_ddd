@@ -8,6 +8,8 @@ module App
 
       outputs :success, :not_found
 
+      private
+
       def perform(user_id:)
         output :success, user_repository.get_by_id(user_id)
       rescue user_repository.class::UserNotFound => e

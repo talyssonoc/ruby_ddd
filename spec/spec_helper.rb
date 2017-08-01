@@ -28,7 +28,7 @@ module ControllerTest
 end
 
 module FactoryMixin
-  def create(resource, attributes)
+  def create(resource, attributes = {})
     Factory[resource, attributes]
   end
 end
