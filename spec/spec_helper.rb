@@ -4,6 +4,12 @@ require 'bundler/setup'
 ENV['RACK_ENV'] ||= 'test'
 
 require 'simplecov'
+require 'coveralls'
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
 SimpleCov.start
 
 require File.expand_path('../../src/boot', __FILE__)
