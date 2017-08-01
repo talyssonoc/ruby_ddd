@@ -1,0 +1,10 @@
+language: ruby
+env:
+  - DATABASE_URL=mysql2://root@127.0.0.1/ruby_ddd_test
+services:
+  - mysql
+before_script:
+  - mysql -e 'CREATE DATABASE ruby_ddd_test;'
+  - RACK_ENV=test bundle exec rake db:migrate
+script:
+  - bundle exec rspec
