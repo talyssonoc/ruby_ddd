@@ -1,9 +1,9 @@
-require 'infra/rom/sql_relation'
+require 'infra/base/sql_relation'
 
 module Infra
-  module ROM
+  module Database
     module Relations
-      class Users < SQLRelation
+      class Users < Base::SQLRelation
         schema(:users, infer: true)
       end
     end
