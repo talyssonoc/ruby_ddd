@@ -19,9 +19,8 @@ describe App::User::GetUser do
 
   describe 'when user does not exist on the repository' do
     it 'outputs with not_found yielding the error' do
-      user_repository_class = Class.new do
-        UserNotFound = Class.new(StandardError)
-      end
+      user_repository_class = Class.new
+      user_repository_class::UserNotFound = Class.new(StandardError)
 
       user_repository = user_repository_class.new
 
