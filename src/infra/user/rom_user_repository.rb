@@ -1,10 +1,11 @@
 require 'import'
 require 'infra/base/repository'
-require 'domain/user/user'
 
 module Infra
   module User
     class ROMUserRepository < Base::Repository[:users]
+      include Import['domain.user.user_entity']
+
       UserNotFound = Class.new(::StandardError)
 
       auto_struct false
@@ -34,19 +35,15 @@ module Infra
       end
 
       def map_to_entity(result_set)
-        result_set.map_to(entity_class)
+        result_set.map_to(user_entity)
       end
 
       def to_entity(hash)
-        entity_class.new(hash)
+        user_entity.new(hash)
       end
 
       def to_database(user)
         user.attributes
-      end
-
-      def entity_class
-        Domain::User::User
       end
     end
   end
