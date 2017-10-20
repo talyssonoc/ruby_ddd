@@ -1,27 +1,27 @@
 require 'import'
+require 'infra/base/repository'
 
 module Infra
   module User
-    class ROMUserRepository
-      include Import[
-        'domain.user.user_entity',
-        'infra.rom.rom'
-      ]
+    class ROMUserRepository < Base::Repository[:users]
+      include Import['domain.user.user_entity']
 
       UserNotFound = Class.new(::StandardError)
 
+      auto_struct false
+
+      def add(user)
+        to_entity(create(user))
+      end
+
       def get_all
-        users.map(&method(:build_entity))
+        map_to_entity(users).to_a
       end
 
       def get_by_id(id)
-        build_entity(users.fetch(id))
+        map_to_entity(users.by_pk(id)).one!
       rescue ::ROM::TupleCountMismatchError
         raise UserNotFound, id
-      end
-
-      def create(attributes)
-        get_by_id(users.insert(attributes))
       end
 
       def count
@@ -30,12 +30,20 @@ module Infra
 
       private
 
-      def users
-        rom.relations.users
+      def create(user)
+        users.command(:create).call(to_database(user))
       end
 
-      def build_entity(user_rom)
-        user_entity.new(user_rom.to_h)
+      def map_to_entity(result_set)
+        result_set.map_to(user_entity)
+      end
+
+      def to_entity(hash)
+        user_entity.new(hash)
+      end
+
+      def to_database(user)
+        user.attributes
       end
     end
   end

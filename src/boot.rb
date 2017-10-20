@@ -32,7 +32,7 @@ Container.finalize! do |container|
     end
 
     namespace('user') do
-      register('user_repository') { Infra::User::ROMUserRepository.new }
+      register('user_repository') { Infra::User::ROMUserRepository.new(container['infra.rom.rom']) }
     end
   end
 end
